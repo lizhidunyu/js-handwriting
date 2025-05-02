@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button class="button1" @click="click1">11</button>
+    <button class="button2" @click="click2">22</button>
+    <button class="button3" @click="click3">33</button>
+    <div></div>
+
+    <script>
+      window.addEventListener("hashchange", (e) => {
+        const key = e.newURL.split("#")[1];
+        switch (key) {
+          case "1":
+            div.innerHTML = "111111111";
+            break;
+          case "2":
+            div.innerHTML = "22222222";
+            break;
+          case "3":
+            div.innerHTML = "333333333";
+            break;
+        }
+        console.log(e);
+      });
+      const div = document.querySelector("div");
+      const button1 = document.querySelector(".button1");
+      const button2 = document.querySelector(".button2");
+      const button3 = document.querySelector(".button3");
+
+      button1.addEventListener("click", () => {
+        window.location.hash = "#1";
+      });
+      button2.addEventListener("click", () => {
+        window.location.hash = "#2";
+      });
+      button3.addEventListener("click", () => {
+        window.location.hash = "#3";
+      });
+    </script>
+  </body>
+</html>

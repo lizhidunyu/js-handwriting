@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 
+      左盒子左浮,
+      右盒子右浮,
+      中间盒子margin,
+      父元素使用BFC清除浮动
+      */
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      /* .container {
+        background-color: pink;
+        height: 50px;
+      } */
+
+      .left {
+        width: 50px;
+        height: 50px;
+        background-color: yellow;
+        float: left;
+      }
+      .right {
+        width: 50px;
+        height: 50px;
+        background-color: yellow;
+        float: right;
+      }
+      .middle {
+        margin-left: 50px;
+        margin-right: 50px;
+        background-color: black;
+        height: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left"></div>
+      <div class="right"></div>
+      <div class="middle"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transition Example</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+        transition: width 1s, height 2s;
+      }
+
+      .box:hover {
+        width: 200px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+  </body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Example</title>
+    <style>
+      @keyframes changeColor {
+        0% {
+          background-color: red;
+          left: 0;
+        }
+        50% {
+          background-color: yellow;
+          left: 200px;
+        }
+        100% {
+          background-color: blue;
+          left: 0;
+        }
+      }
+
+      .box {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        animation: changeColor 4s infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas Animation Example</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+
+      let rectX = 0;
+      const rectY = canvas.height / 2;
+      const rectWidth = 50;
+      const rectHeight = 50;
+      const rectSpeed = 2;
+
+      function drawRect() {
+        ctx.fillStyle = "blue";
+        ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+      }
+
+      function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      function animate() {
+        clearCanvas();
+        drawRect();
+
+        rectX += rectSpeed;
+
+        if (rectX > canvas.width || rectX < 0) {
+          rectSpeed = -rectSpeed; // Reverse direction
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>

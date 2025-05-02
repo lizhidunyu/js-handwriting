@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用CDN引入Vue 3</title>
+    <!-- 引入Vue 3的CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{ message }}</h1>
+      <h1>{{ msg }}</h1>
+      <button @click="updateMessage">点击我</button>
+    </div>
+
+    <script>
+      // 创建Vue应用
+      const app = Vue.createApp({
+        data() {
+          return {
+            message: "Hello, Vue 3!",
+          };
+        },
+        computed: {
+          msg() {
+            const res = Promise.resolve("124");
+            return "12" + this.message;
+          },
+        },
+        methods: {
+          updateMessage() {
+            this.message = "你点击了按钮！";
+          },
+        },
+      });
+
+      // 挂载Vue应用
+      app.mount("#app");
+    </script>
+  </body>
+</html>

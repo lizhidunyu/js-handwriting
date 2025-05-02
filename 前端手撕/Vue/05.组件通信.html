@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用CDN引入Vue 3</title>
+    <!-- 引入Vue 3的CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <template id="my-app">
+      <h2>{{ message }}</h2>
+      <button @click="buttonClick">按钮</button>
+      <component-a ref="child" v-model="message"></component-a>
+    </template>
+    <template id="myappA">
+      {{msg.message}}
+      <input type="text" />
+    </template>
+
+    <script>
+      const componentA = {
+        template: "#myappA",
+        inject: ["app"],
+        beforeCreate() {
+          console.log("---", this.app);
+        },
+        created() {
+          console.log("***", this.app);
+        },
+        data() {
+          return {
+            msg: this.app,
+          };
+        },
+        methods: {
+          updated() {
+            console.log("updateddd");
+          },
+        },
+      };
+      console.log(componentA);
+
+      const App = {
+        template: "#my-app",
+        data() {
+          return {
+            message: "hello world",
+          };
+        },
+        provide() {
+          return {
+            app: this,
+          };
+        },
+        methods: {
+          buttonClick() {
+            this.message = "yucuiwen";
+            console.log(this);
+
+            this.$refs.child.updated();
+          },
+        },
+        components: {
+          "component-a": componentA,
+        },
+      };
+      console.log(App);
+
+      const app = Vue.createApp(App);
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button class="button1" @click="void(0)">11</button>
+    <button class="button2" @click="void(0)">22</button>
+    <button class="button3" @click="void(0)">33</button>
+    <div id="content"></div>
+
+    <script>
+      const contentDiv = document.getElementById("content");
+
+      const updateContent = (hash) => {
+        switch (hash) {
+          case "1":
+            contentDiv.innerHTML = "111111111";
+            break;
+          case "2":
+            contentDiv.innerHTML = "22222222";
+            break;
+          case "3":
+            contentDiv.innerHTML = "333333333";
+            break;
+          default:
+            contentDiv.innerHTML = "";
+        }
+      };
+
+      window.addEventListener("popstate", (event) => {
+        //前进后退操作
+      });
+
+      document.querySelector(".button1").addEventListener("click", (e) => {
+        e.preventDefault();
+        history.pushState({}, "Page 1", "1");
+        updateContent("1");
+      });
+
+      document.querySelector(".button2").addEventListener("click", (e) => {
+        e.preventDefault();
+        history.pushState({}, "Page 2", "2");
+        updateContent("2");
+      });
+
+      document.querySelector(".button3").addEventListener("click", (e) => {
+        e.preventDefault();
+        history.pushState({}, "Page 3", "3");
+        updateContent("3");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parent Page</title>
+  </head>
+  <body>
+    <h1>This is the parent page</h1>
+    <iframe src="./a.html" id="childFrame" width="300" height="200"></iframe>
+
+    <script>
+      var childFrame = document.getElementById("childFrame").contentWindow;
+
+      function sendMessageToChild() {
+        childFrame.postMessage("Hello from parent!", "*");
+      }
+
+      window.addEventListener("message", function (event) {
+        if (event.origin !== window.location.origin) {
+          return;
+        }
+        console.log("Message from child:", event.data);
+      });
+
+      // 示例：在页面加载后发送消息给iframe
+      window.onload = sendMessageToChild;
+    </script>
+  </body>
+</html>

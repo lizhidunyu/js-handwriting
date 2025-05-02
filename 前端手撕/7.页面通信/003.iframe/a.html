@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Child Page</title>
+  </head>
+  <body>
+    <h1>This is the child page inside an iframe</h1>
+
+    <script>
+      window.addEventListener("message", function (event) {
+        if (event.origin !== window.location.origin) {
+          return;
+        }
+        console.log("Message from parent:", event.data);
+
+        // 回复父页面
+        event.source.postMessage("Hello from child!", event.origin);
+      });
+    </script>
+  </body>
+</html>

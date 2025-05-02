@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .demo {
+        width: 400px;
+        height: 400px;
+        background-color: pink;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo"></div>
+    <script>
+      let canDragged = false;
+      let initPosition = [];
+      const demo = document.querySelector(".demo");
+      demo.addEventListener("mousedown", (e) => {
+        canDragged = true;
+        initPosition = [e.clientX, e.clientY];
+      });
+      demo.addEventListener("mousemove", (e) => {
+        //停掉
+        if (!canDragged) {
+          return;
+        }
+        let x = e.clientX,
+          y = e.clientY;
+        let tranX = x - initPosition[0],
+          tranY = y - initPosition[1];
+
+        let initLeft = demo.style.left == 0 ? 0 : demo.style.left;
+        let initRight = demo.style.top == 0 ? 0 : demo.style.top;
+
+        demo.style.left = tranX + parseInt(initLeft) + "px";
+        demo.style.top = tranY + parseInt(initRight) + "px";
+
+        //初始位置不停在变
+        initPosition = [x, y];
+      });
+      demo.addEventListener("mouseup", function (e) {
+        canDragged = false;
+      });
+    </script>
+  </body>
+</html>

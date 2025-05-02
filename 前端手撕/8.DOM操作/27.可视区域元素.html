@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Element Visibility Detection</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 200vh; /* 增加页面高度以便滚动 */
+      }
+      .content {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #myElement {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        text-align: center;
+        line-height: 200px;
+        font-size: 24px;
+        margin-top: 200px;
+        border: 2px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">SCroll down to see the element</div>
+    <div id="myElement">Target Element</div>
+
+    <script>
+      // 方法一：使用 getBoundingClientRect 判断元素是否完全在可视区域
+      function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        const windowHeight =
+          window.innerHeight || document.documentElement.clientHeight;
+        const windowWidth =
+          window.innerWidth || document.documentElement.clientWidth;
+        return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <= windowHeight &&
+          rect.right <= windowWidth
+        );
+      }
+
+      // 方法二：使用 IntersectionObserver 异步检测元素进入视口
+      //   function observeElementInView(el, callback) {
+      //     const observer = new IntersectionObserver((entries) => {
+      //       entries.forEach((entry) => {
+      //         console.log("entry:", entry);
+      //         if (entry.isIntersecting) {
+      //           callback(entry.target);
+      //           // 如果只需要检测一次，可以在首次进入视口后停止观察
+      //           //   observer.unobserve(entry.target);
+      //         }
+      //       });
+      //     });
+      //     observer.observe(el);
+      //   }
+
+      // 方法三：通过滚动事件监听和 getBoundingClientRect 检测元素是否在视口内
+      function checkVisibilityOnScroll(el) {
+        function onScroll() {
+          if (isElementInViewport(el)) {
+            console.log(
+              "Element is in the viewport (via scroll event listener)"
+            );
+            // 可以在检测到进入视口后移除滚动监听
+            // window.removeEventListener("scroll", onScroll);
+          }
+        }
+        window.addEventListener("scroll", onScroll);
+      }
+
+      // 获取要检测的元素
+      const element = document.querySelector("#myElement");
+
+      // 测试方法一
+      //   window.addEventListener("scroll", () => {
+      //     if (isElementInViewport(element)) {
+      //       console.log("Element is in the viewport (via getBoundingClientRect)");
+      //     }
+      //   });
+
+      // 测试方法二
+      //   observeElementInView(element, (el) => {
+      //     console.log(`${el.id} is in the viewport (via IntersectionObserver)`);
+      //   });
+
+      // 测试方法三
+      checkVisibilityOnScroll(element);
+    </script>
+  </body>
+</html>

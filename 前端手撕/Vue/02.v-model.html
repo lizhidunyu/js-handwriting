@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用CDN引入Vue 3</title>
+    <!-- 引入Vue 3的CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- <input v-model="sth" /> -->
+      {{sth}}
+      <!-- <input v-bind:value="sth" v-on:input="sth = $event.target.value" /> -->
+      <input v-bind:value="sth" @input="(e) => inputEvent(e)" />
+    </div>
+
+    <script>
+      // 创建Vue应用
+      const app = Vue.createApp({
+        data() {
+          return {
+            sth: "Hello, Vue 3!",
+          };
+        },
+        computed: {},
+        methods: {
+          inputEvent(e) {
+            this.sth = e.target.value + "a";
+          },
+        },
+      });
+
+      // 挂载Vue应用
+      app.mount("#app");
+    </script>
+  </body>
+</html>

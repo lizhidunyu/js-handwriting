@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>setTimeout Animation</title>
+    <style>
+      #box {
+        width: 50px;
+        height: 50px;
+        background-color: red;
+        position: absolute;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box"></div>
+    <script>
+      //   let box = document.getElementById("box");
+      //   let direction = "right";
+      //   let position = 0;
+
+      //   function moveBox() {
+      //     if (direction === "right") {
+      //       position += 10;
+      //       if (position >= window.innerWidth - box.offsetWidth) {
+      //         direction = "left";
+      //       }
+      //     } else {
+      //       position -= 10;
+      //       if (position <= 0) {
+      //         direction = "right";
+      //       }
+      //     }
+      //     box.style.left = position + "px";
+      //     setTimeout(moveBox, 16); // 尝试每16毫秒移动一次，但可能不准确
+      //   }
+
+      //   moveBox();
+
+      let box = document.getElementById("box");
+      let direction = "right";
+      let position = 0;
+      let lastTime = 0;
+
+      function moveBox(time) {
+        const deltaTime = time - lastTime;
+        lastTime = time;
+
+        // 这里我们并不直接使用deltaTime来计算位置，而是仍然用固定的步长，
+        // 但deltaTime可以用于更复杂的动画中，以实现基于时间的平滑运动。
+        if (direction === "right") {
+          position += 10;
+          if (position >= window.innerWidth - box.offsetWidth) {
+            direction = "left";
+          }
+        } else {
+          position -= 10;
+          if (position <= 0) {
+            direction = "right";
+          }
+        }
+        box.style.left = position + "px";
+
+        requestAnimationFrame(moveBox);
+      }
+
+      requestAnimationFrame(moveBox);
+    </script>
+  </body>
+</html>

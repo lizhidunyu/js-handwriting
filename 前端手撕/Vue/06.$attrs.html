@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用CDN引入Vue 3</title>
+    <!-- 引入Vue 3的CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <template id="app1">
+      <child1 :p1="a"></child1>
+    </template>
+    <template id="child1">
+      <child2 :x="x"></child2>
+    </template>
+    <template id="child2"> {{ $attrs }}</template>
+
+    <script>
+      const componentB = {
+        template: "#child2",
+        // props: ["pChild2"],
+        // inheritAttrs: false,
+        // mounted() {
+        //   this.$emit("test2"); // 触发APP.vue中的test2方法
+        // },
+      };
+      const componentA = {
+        template: "#child1",
+        // props: ["p1"],
+        data() {
+          return {
+            x: "xxx",
+            y: "yyy",
+            z: "zzz",
+          };
+        },
+        components: {
+          child2: componentB,
+        },
+        // inheritAttrs: false,
+        // mounted() {
+        //   this.$emit("test1");
+        // },
+      };
+
+      const App = {
+        template: "#app1",
+        data() {
+          return {
+            a: "aaa",
+            b: "bbb",
+            c: "ccc",
+          };
+        },
+        components: {
+          child1: componentA,
+        },
+      };
+
+      const app = Vue.createApp(App);
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>

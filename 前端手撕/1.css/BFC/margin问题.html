@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Margin Collapsing Example</title>
+    <style>
+      .father {
+        /* 这里不需要特殊的样式来形成BFC，因为默认就是块级上下文 */
+      }
+      .son1 {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        margin-bottom: 50px; /* 这个外边距可能会与.son2的margin-top折叠 */
+      }
+      .son2 {
+        width: 200px;
+        height: 200px;
+        background-color: blue;
+        margin-top: 35px;
+        /* 方法1: 浮动（通常不推荐仅为了阻止外边距折叠而浮动） */
+        float: left;
+        clear: both;
+        /* 方法2: display: inline-block; （这会使元素成为行内块级元素，可能影响布局） */
+        /* display: inline-block; */
+        /* 注意：如果使用inline-block，需要处理可能产生的空白间隙 */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="father">
+      <div class="son1"></div>
+      <!-- 方法3：&nbsp -->
+      <!-- 注意：如果使用内容（&nbsp;）来防止折叠，需要在.son2的HTML中添加它 -->
+      <div class="son2"></div>
+    </div>
+  </body>
+</html>

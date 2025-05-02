@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 引入 React -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <!-- 引入 ReactDOM -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <!-- 引入 Babel 编译器 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.20.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- 使用 JSX 语法 -->
+    <script type="text/babel">
+      const Home = () => {
+        const [data, setData] = React.useState([]);
+        const [controller, setController] = React.useState([false, false]);
+
+        const handleClick = React.useCallback(
+          (id) => {
+            let count = 0;
+            const newData = data.map((item) => {
+              if (
+                (id === item.id && !item.checked) ||
+                (id !== item.id && item.checked)
+              ) {
+                count++;
+              }
+              return {
+                ...item,
+                checked: id === item.id ? !item.checked : item.checked,
+              };
+            });
+            setData(newData);
+          },
+          [data, controller]
+        );
+
+        React.useEffect(() => {
+          const arr = data.filter((item) => item.checked);
+          if (arr.length === data.length) {
+            setController([true, controller[1]]);
+          } else {
+            setController([false, controller[1]]);
+          }
+        }, [data]);
+
+        const handleSelectAll = React.useCallback(() => {
+          if (!controller[0]) {
+            setData([...data.map((item) => ({ ...item, checked: true }))]);
+            setController([true, controller[1]]);
+          } else {
+            setData([...data.map((item) => ({ ...item, checked: false }))]);
+            setController([false, controller[1]]);
+          }
+        }, [data, controller]);
+
+        const handleSelectOthers = React.useCallback(() => {
+          const newData = data.map((item) => {
+            return {
+              ...item,
+              checked: !item.checked,
+            };
+          });
+          setData(newData);
+          setController([controller[0], !controller[1]]);
+        }, [data, controller]);
+
+        React.useEffect(() => {
+          setData([
+            { label: "选项1", id: "item1", checked: false },
+            { label: "选项2", id: "item2", checked: false },
+            { label: "选项3", id: "item3", checked: false },
+          ]);
+        }, []);
+
+        return (
+          <>
+            <div onClick={handleSelectAll}>
+              <input type="checkbox" checked={controller[0]} /> {"全选"}
+            </div>
+            {data.map((item) => {
+              return (
+                <div>
+                  <input
+                    type="checkbox"
+                    id={item.id}
+                    checked={item.checked}
+                    onClick={() => handleClick(item?.id)}
+                  />{" "}
+                  {item.label}
+                </div>
+              );
+            })}
+            <div>
+              <button onClick={handleSelectOthers}> 反选</button>
+            </div>
+          </>
+        );
+      };
+
+      // 定义一个 React 组件，使用 JSX 语法
+      const App = () => {
+        return <Home />;
+      };
+
+      // 渲染 React 组件到 DOM
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

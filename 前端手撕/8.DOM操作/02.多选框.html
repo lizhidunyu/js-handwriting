@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>选择框组件</title>
+
+    <!-- 引入 React 和 ReactDOM 的 CDN -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18.2.0/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"
+    ></script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .container {
+        margin-top: 20px;
+      }
+      .container button {
+        margin-left: 10px;
+      }
+      .container label {
+        margin-right: 10px;
+      }
+      .checkbox-list div {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>选择框组件</h1>
+      <div id="app"></div>
+    </div>
+
+    <script>
+      // SelectAllComponent 组件
+      const SelectAllComponent = ({ items }) => {
+        const [selectedItems, setSelectedItems] = React.useState([]);
+
+        // 处理单个复选框的选择和取消选择
+        const handleCheckboxChange = (item) => {
+          setSelectedItems((prevSelected) => {
+            if (prevSelected.includes(item)) {
+              return prevSelected.filter((i) => i !== item); // 取消选中
+            } else {
+              return [...prevSelected, item]; // 选中
+            }
+          });
+        };
+
+        // 处理全选框的选择和取消选择
+        const handleSelectAllChange = (event) => {
+          if (event.target.checked) {
+            setSelectedItems(items); // 全选
+          } else {
+            setSelectedItems([]); // 取消全选
+          }
+        };
+
+        // 处理反选
+        const handleInvertSelection = () => {
+          setSelectedItems((prevSelected) => {
+            const newSelected = items.filter(
+              (item) => !prevSelected.includes(item)
+            );
+            return newSelected;
+          });
+        };
+
+        // 判断是否全选
+        const isAllSelected = selectedItems.length === items.length;
+
+        return (
+          <div className="checkbox-list">
+            <div>
+              {/* 全选复选框 */}
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isAllSelected}
+                  onChange={handleSelectAllChange}
+                />
+                全选
+              </label>
+
+              {/* 反选按钮 */}
+              <button onClick={handleInvertSelection}>反选</button>
+            </div>
+
+            {/* 显示所有选择框 */}
+            {items.map((item) => (
+              <div key={item}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selectedItems.includes(item)}
+                    onChange={() => handleCheckboxChange(item)}
+                  />
+                  {item}
+                </label>
+              </div>
+            ))}
+          </div>
+        );
+      };
+
+      // 使用示例
+      const items = ["Item 1", "Item 2", "Item 3", "Item 4"];
+
+      // React 组件渲染到页面
+      ReactDOM.render(
+        <SelectAllComponent items={items} />,
+        document.getElementById("app")
+      );
+    </script>
+  </body>
+</html>

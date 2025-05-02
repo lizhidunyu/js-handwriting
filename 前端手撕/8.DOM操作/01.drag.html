@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drag API Example</title>
+    <style>
+      #dragElement {
+        width: 100px;
+        height: 100px;
+        background-color: lightblue;
+        margin: 20px;
+        cursor: move;
+      }
+      #dropZone {
+        width: 200px;
+        height: 200px;
+        border: 2px dashed #ccc;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="dragElement" draggable="true">Drag me!</div>
+    <div id="dropZone">Drop here</div>
+
+    <script>
+      const dragElement = document.getElementById("dragElement");
+      const dropZone = document.getElementById("dropZone");
+
+      // 设置拖动源（拖动开始时）
+      dragElement.addEventListener("dragstart", (event) => {
+        // 可以通过 dataTransfer 存储拖动数据
+        event.dataTransfer.setData("text", "Dragged Element");
+        console.log("Drag start");
+      });
+
+      // 目标区域允许拖拽
+      dropZone.addEventListener("dragover", (event) => {
+        event.preventDefault(); // 必须调用 preventDefault() 来允许放置
+        console.log("Dragging over drop zone");
+      });
+
+      // 拖动进入目标区域时触发
+      dropZone.addEventListener("dragenter", (event) => {
+        console.log("Drag enter");
+      });
+
+      // 目标区域接受放置时触发
+      dropZone.addEventListener("drop", (event) => {
+        event.preventDefault();
+        const data = event.dataTransfer.getData("text");
+        console.log("Dropped:", data);
+        alert("You dropped: " + data);
+      });
+
+      // 拖动结束时触发
+      dragElement.addEventListener("dragend", (event) => {
+        console.log("Drag end");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const imageLoad = (url) => {
+        return new Promise((res, rej) => {
+          const image = new Image(100, 100);
+          image.src = url;
+          image.onload = () => {
+            res(image);
+          };
+          image.onerror = (err) => {
+            rej(err);
+          };
+        });
+      };
+
+      imageLoad().then(
+        (img) => {
+          document.body.appendChild(img);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    </script>
+  </body>
+</html>

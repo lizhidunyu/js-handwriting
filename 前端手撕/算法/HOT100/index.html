@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>白屏检测</title>
+  </head>
+  <body>
+    <h1>白屏检测示例</h1>
+
+    <button onclick="compareCanvasScreenshot()">执行 H5 截图检测</button>
+    <button onclick="compareNativeScreenshot()">执行 Native 截图检测</button>
+
+    <script>
+      // H5 截图 + 图片对比算法
+      function compareCanvasScreenshot() {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // 绘制当前页面
+        ctx.drawImage(document.documentElement, 0, 0);
+
+        // 获取图像数据
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+        // 判断白屏逻辑（示例：检查像素颜色是否接近全白）
+        let isWhiteScreen = true;
+        const pixels = imageData.data;
+
+        for (let i = 0; i < pixels.length; i += 4) {
+          if (
+            !(pixels[i] > 240 && pixels[i + 1] > 240 && pixels[i + 2] > 240)
+          ) {
+            isWhiteScreen = false;
+            break;
+          }
+        }
+
+        if (isWhiteScreen) {
+          console.log("检测到白屏");
+          alert("检测到白屏");
+        } else {
+          console.log("页面已渲染");
+          alert("页面已渲染");
+        }
+      }
+
+      // Native 截图 + 图片对比算法
+      function compareNativeScreenshot() {
+        // 假设 Native 环境提供截图功能，返回 base64 编码的图片数据
+        const nativeScreenshot = getNativeScreenshot(); // Native 提供的方法
+
+        const img = new Image();
+        img.src = `data:image/png;base64,${nativeScreenshot}`;
+
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          canvas.width = img.width;
+          canvas.height = img.height;
+
+          // 绘制截图
+          ctx.drawImage(img, 0, 0);
+
+          // 获取像素数据
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+          // 与基准图片进行对比（需有基准图像 base64Image）
+          const baseImageData = getBaseImageData(); // 假设你已经有了基准图片数据
+          const isWhiteScreen = compareImages(imageData, baseImageData);
+
+          if (isWhiteScreen) {
+            console.log("检测到白屏");
+            alert("检测到白屏");
+          } else {
+            console.log("页面已渲染");
+            alert("页面已渲染");
+          }
+        };
+      }
+
+      // 获取 Native 截图方法（示例）
+      function getNativeScreenshot() {
+        // 模拟从 Native 环境获取截图的 base64 数据
+        return "iVBORw0KGgoAAAANSUhEUgAAAAUA...";
+      }
+
+      // 获取基准图片数据
+      function getBaseImageData() {
+        // 这里应该返回基准图像的像素数据，通常是已经准备好的静态图像
+        const baseImage = new Image();
+        baseImage.src = "data:image/png;base64,...."; // 用一个真实的 base64 图片字符串替换
+
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        baseImage.onload = () => {
+          canvas.width = baseImage.width;
+          canvas.height = baseImage.height;
+          ctx.drawImage(baseImage, 0, 0);
+          return ctx.getImageData(0, 0, canvas.width, canvas.height);
+        };
+      }
+
+      // 对比两张图片的像素
+      function compareImages(imageData1, imageData2) {
+        const data1 = imageData1.data;
+        const data2 = imageData2.data;
+
+        let isWhiteScreen = true;
+
+        // 比较每个像素
+        for (let i = 0; i < data1.length; i++) {
+          if (data1[i] !== data2[i]) {
+            isWhiteScreen = false;
+            break;
+          }
+        }
+
+        return isWhiteScreen;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button>打开新页面</button>
+    <script>
+      localStorage.setItem("message", "hello from Page A!");
+      sessionStorage.setItem("sessionMsg", "hello from Page INDEX--session!");
+      const button = document.querySelector("button");
+      button.onclick = () => {
+        newWin = window.open("./a.html");
+        // newWin.onload = () => {
+        //   newWin.postMessage("hello from Page INDEX");
+        // };
+      };
+    </script>
+  </body>
+</html>

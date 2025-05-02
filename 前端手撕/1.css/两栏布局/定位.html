@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .father {
+        background-color: red;
+        position: relative;
+        overflow: auto;
+      }
+      .son1 {
+        background-color: pink;
+        position: absolute;
+        left: 0;
+        width: 50px;
+        height: 50px;
+      }
+      .son2 {
+        /* 一 */
+        /* margin-left: 50px; */
+        /* 二 */
+        overflow: auto;
+        height: 50px;
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="father">
+      <div class="son1"></div>
+      <div class="son2"></div>
+    </div>
+  </body>
+</html>

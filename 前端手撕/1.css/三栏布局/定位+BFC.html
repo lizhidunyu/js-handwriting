@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .container {
+        background-color: pink;
+        position: relative;
+      }
+      .left,
+      .right {
+        width: 50px;
+        height: 50px;
+        background-color: yellow;
+      }
+      .left {
+        position: absolute;
+        left: 0;
+      }
+      .right {
+        position: absolute;
+        right: 0;
+      }
+      .middle {
+        background-color: black;
+        margin-left: 50px;
+        height: 50px;
+        margin-right: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 注意这里的布局 -->
+    <div class="container">
+      <div class="left"></div>
+      <div class="right"></div>
+      <div class="middle"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>多行省略示例</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .container {
+        width: 300px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+        position: relative;
+      }
+      .multiline-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* 限制显示的行数 */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.5; /* 行高，可以根据需要调整 */
+      }
+      .more-info {
+        display: block;
+        text-align: right;
+        color: blue;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p class="multiline-text">
+        这是一个多行省略的示例文本。当文本内容超出容器的大小时，将显示省略号。你可以根据需要调整容器的宽度和显示的行数。这个示例展示了如何使用
+        CSS 的 -webkit-line-clamp 属性来实现多行省略效果。
+      </p>
+      <span class="more-info">显示更多</span>
+    </div>
+  </body>
+</html>

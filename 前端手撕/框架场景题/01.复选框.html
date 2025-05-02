@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>复选框示例</title>
+    <style>
+      #selectAll {
+        margin-bottom: 10px;
+      }
+      .item {
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div><input type="checkbox" id="selectAll" /> 全选</div>
+    <div><input type="checkbox" class="item" /> 选项 1</div>
+    <div><input type="checkbox" class="item" /> 选项 2</div>
+    <div><input type="checkbox" class="item" /> 选项 3</div>
+    <button id="toggle">反选</button>
+
+    <script>
+      const selectAll = document.getElementById("selectAll");
+      const items = document.querySelectorAll(".item");
+
+      selectAll.addEventListener("change", () => {
+        items.forEach((item) => (item.checked = selectAll.checked));
+      });
+
+      document.getElementById("toggle").addEventListener("click", () => {
+        items.forEach((item) => (item.checked = !item.checked));
+      });
+
+      items.forEach((item) => {
+        item.addEventListener("change", () => {
+          selectAll.checked = [...items].every((i) => i.checked);
+          selectAll.indeterminate =
+            [...items].some((i) => i.checked) && !selectAll.checked;
+        });
+      });
+    </script>
+  </body>
+</html>
