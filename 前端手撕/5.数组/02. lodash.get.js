@@ -1,35 +1,11 @@
 /**1.**/
-function _get(obj, path, defaultValue) {
-  let key = Array.isArray(path)
-    ? path
-    : path.replace(/(\[(\d)\])/g, ".$2").split(".");
-  obj = obj[key[0]];
-  if (obj && key.length > 1) {
-    return _get(obj, key.slice(1), defaultValue);
-  }
-  return obj ?? defaultValue;
-}
-
-// function _get(obj, path, defaultValue) {
-//   let key = Array.isArray(obj)
-//     ? path
-//     : path.replace(/(\[(\d)\])/g, ".$2").split(".");
-//   obj = obj[key[0]];
-//   if (obj && key.length > 1) {
-//     return _get(obj, key.slice(1), defaultValue);
-//   }
-//   return obj ?? defaultValue;
-// }
-
-function _get(obj, path, defaultValue) {
-  let key = Array.isArray(obj)
-    ? path
-    : path.replace(/(\[(\d)\])/g, ".$2").split(".");
-  obj = obj[key[0]];
+function _get(obj, str, defaultValue) {
+  const path =  Array.isArray(str) ? str : str.replace(/(\[(\d)\])/g, '.$2').split(".")
+  obj = obj[path[0]]
   if (obj && path.length > 1) {
-    return _get(obj, path.slice(1), defaultValue);
-  }
-  return obj ?? defaultValue;
+    return _get(obj, path.slice(1), defaultValue)
+  }  
+  return obj ?? defaultValue
 }
 
 const obj = { a: [{ b: 1 }] };
@@ -52,4 +28,4 @@ const valBypath = (data, path) => {
 
 const data = { a: { b: [{}, { c: 0 }] } };
 console.log(valBypath(data, "a.b.1.c"));
-// 0
+0

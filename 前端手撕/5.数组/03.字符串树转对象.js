@@ -10,17 +10,20 @@ const obj = {
   },
 };
 
+
 const transformToObj = (obj, parentKey, resObj = {}) => {
-  for (const key in obj) {
-    const newKey = parentKey ? `${parentKey}.${key}` : key;
-    const value = obj[key];
-    if (typeof value === "object" && value !== null) {
-      transformObj(value, newKey, resObj);
+  for (let key in obj) {
+    const newKey = parentKey ? `${parentKey}.${key}` : `${key}`
+    const value = obj[key]
+    if (typeof value === 'object' && value !== 'null') {
+      transformToObj(value, newKey, resObj)
     } else {
-      resObj[newKey] = value;
+      resObj[newKey] = value
     }
   }
-  return resObj;
-};
+  return resObj
+}
+
+
 
 console.log(transformToObj(obj));
