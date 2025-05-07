@@ -1,41 +1,36 @@
-// //数组扁平化
-// const flatArr = (arr) => {
-//   return arr.reduce((pre, cur) => {
-//     return pre.concat(Array.isArray(cur) ? flatArr(cur) : cur);
-//   }, []);
-// };
-// console.log(flatArr([1, [2, 3], [3, 4], [5, 6, [7, 8]]]));
+// 1.数组扁平化
+const flatArr = (arr) => {
+  return arr.reduce((pre, cur) => {
+    return pre.concat(Array.isArray(cur) ? flatArr(cur) : cur)
+  }, [])
+}
+console.log(flatArr([1, [2, 3], [3, 4], [5, 6, [7, 8]]]));
 
-// // 数组深度1-递归
-// const getDepath1 = (arr) => {
-//   if (!Array.isArray(arr)) return 0;
-//   return 1 + Math.max(0, ...arr.map(getDepath1));
-// };
+// 数组深度1-递归
+const getDepth = (arr) => {
+  if (!Array.isArray(arr)) return 0
+  return 1 + Math.max(0, ...arr.map(getDepth))
+}
+console.log(getDepth([1, [2, 3], [3, 4], [5, 6, [7, 8]]]));
 
-// const getDepth1 = (arr) => {
-//   if (!Array.isArray(arr)) return 0;
-//   return 1 + Math.max(0, ...arr.map(getDepath1));
-// };
-
-// // 数组深度2-迭代
-// const getDepth2 = (arr) => {
-//   if (!Array.isArray(arr)) return 0;
-//   let maxDepth = 0;
-//   const stack = [{ value: arr, depth: 1 }];
-//   while (stack.length) {
-//     const { value, depth } = stack.pop();
-//     maxDepth = Math.max(maxDepth, depth);
-//     for (const item of value) {
-//       if (Array.isArray(item)) {
-//         stack.push({ value: item, depth: depth + 1 });
-//       }
-//     }
-//   }
-//   return maxDepth;
-// };
+// 数组深度2-迭代
+const getDepath2 = (arr) => {
+  if (!Array.isArray(arr)) return 0;
+  let maxDepth = 0;
+  const stack = [{value: arr, depth: 1}]
+  while (stack.length) {
+    const {value, depth} = stack.pop()
+    maxDepth = Math.max(maxDepth, depth)
+    for (const item of value) {
+        if (Array.isArray(item)) {
+          stack.push({value: item, depth: depth + 1})
+        }      
+    }
+  }
+  return maxDepth
+}
 
 // const arr = [12, [1, [111, [12], 2222]], [1, [[[1232]]], 2]];
-// // console.log(getDepath1(arr));
 // console.log(getDepth2(arr));
 
 // // 拍平数组，同时记录每个值当前所在的位置深度
@@ -80,10 +75,10 @@
 //   return result.reverse();
 // }
 
-const getMaxDepath = (arr) => {
-  if (!Array.isArray(arr)) return 0;
-  return 1 + Math.max(0, ...arr.map(getMaxDepath));
-};
+// const getMaxDepath = (arr) => {
+//   if (!Array.isArray(arr)) return 0;
+//   return 1 + Math.max(0, ...arr.map(getMaxDepath));
+// };
 
 // const getMaxDepath = (arr) => {
 //   let maxDepth = 0;
@@ -100,5 +95,5 @@ const getMaxDepath = (arr) => {
 //   return maxDepth;
 // };
 
-const arr33 = [1, [2, [3, [2, [1, 2, 3]], 4], 5], 6];
-console.log(getMaxDepath(arr33));
+// const arr33 = [1, [2, [3, [2, [1, 2, 3]], 4], 5], 6];
+// console.log(getMaxDepath(arr33));

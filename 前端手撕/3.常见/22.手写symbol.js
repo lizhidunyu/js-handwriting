@@ -1,27 +1,3 @@
-// (function () {
-//   const globalRegistry = {};
-//   let id = 0;
-
-//   function MySymbol(description) {
-//     if (this instanceof MySymbol) {
-//       throw new TypeError("Symbol is not a constructor");
-//     }
-//     return `@@symbol_${description}_${id++}`;
-//   }
-
-//   MySymbol.for = function (key) {
-//     if (globalRegistry[key]) {
-//       return globalRegistry[key];
-//     } else {
-//       const symbol = `@@symbol_for_${key}`;
-//       globalRegistry[key] = symbol;
-//       return symbol;
-//     }
-//   };
-
-//   globalThis.MySymbol = MySymbol;
-// })();
-
 (function () {
   const globalRegistry = {};
   let id = 0;

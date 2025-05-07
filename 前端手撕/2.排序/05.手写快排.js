@@ -1,32 +1,3 @@
-// function qucickSort(arr) {
-//   function partition(left, right) {
-//     let i = left,
-//       j = right - 1,
-//       privot = arr[right];
-//     if (left > right) return;
-//     // 注意这里有等号！！
-//     while (i <= j) {
-//       while (arr[i] < privot) {
-//         i++;
-//       }
-//       while (arr[j] > privot) {
-//         j--;
-//       }
-//       // 注意这里有等号！！
-//       if (i <= j) {
-//         [arr[i], arr[j]] = [arr[j], arr[i]];
-//         i++;
-//         j--;
-//       }
-//     }
-//     [arr[i], arr[right]] = [arr[right], arr[i]];
-//     partition(left, j);
-//     partition(i + 1, right);
-//   }
-//   partition(0, arr.length - 1);
-//   return arr;
-// }
-
 function qucickSort(arr) {
   function partition(left, right) {
     if (left >= right) {

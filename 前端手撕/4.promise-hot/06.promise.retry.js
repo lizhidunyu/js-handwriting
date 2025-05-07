@@ -1,40 +1,42 @@
-const promiseRetry = (fn, times, delay) => {
+const promiseRetry = (fun, retryTimes, delay) => {
   return new Promise((resolve, reject) => {
-    const innerFn = () => {
-      fn()
-        .then(() => {
-          resolve();
-        })
-        .catch((e) => {
-          console.log(`还有${times}次尝试`);
-          if (times == 0) {
-            reject(e);
-          } else {
-            times--;
+    const run = async (leftTimes) => {
+        try {
+          const res = await fun()
+          resolve(res)
+        } catch(e) {
+          if (leftTimes>0) {
             setTimeout(() => {
-              innerFn(); // 在delay秒之后再次去尝试，实际上也就是去递归执行
-            }, delay);
+              run(leftTimes-1)
+              console.log(`还有${leftTimes}次尝试机会`);
+            }, delay)
+          } else {
+            reject(e)
+            return
           }
-        });
-    };
-    innerFn();
-  });
-};
+        }
+    }
+    // 构造一个带有回调次数的函数，不断调用判断
+    run(retryTimes)
+  })
+} 
 
 //test函数
-function getData() {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      var num = Math.ceil(Math.random() * 20); //生成1-10的随机数
-      console.log("随机数生成的值：", num);
-      if (num <= 10) {
-        console.log("符合条件，值为" + num);
-        resolve(num);
-      } else {
-        reject("数字大于10了执行失败");
-      }
-    }, 2000);
-  });
+const getData = () => {
+  return new Promise((reoslve, reject) => {
+    const random = Math.random() * 10
+    if (random > 9) {
+      reoslve(random)
+      console.log('fullfilled:', random);
+    } else {
+      reject(random)
+      console.log('rejected:', random);
+    }
+  })
 }
 
-promiseRetry(getData, 5, 1000);
+promiseRetry(getData, 5, 2000).then(res => {
+  console.log("res:",res)
+}).catch(e => {
+  console.log('error:',e)
+})

@@ -1,42 +1,42 @@
-function limitQueue(promisesArr, limit) {
+const limitQueue = (promiseArr, limit) => {
   return new Promise((resolve, reject) => {
-    if (!promisesArr.length) {
-      resolve([]);
-      return;
+    if (!promiseArr.length) {
+      resolve([])
+      return
     }
-    let index = 0,
-      count = 0;
-    const result = [];
-    async function run() {
-      if (index === promisesArr.length) {
-        return;
-      }
-      let i = index;
-      const promise = promisesArr[index++];
+    // 这些变量要定义要循环的外部，不能定义到了循环的内部哦~
+    const values = [];
+    let count = [], index = 0;
+    const run = async () => {
+      if (index === promiseArr.length) return;
+      let i = index
+      const task = promiseArr[index++]
       try {
-        const res = await promise;
-        result[i] = res;
+        const res = await task
+        values[i] = res
       } catch (err) {
-        result[i] = err;
+        values[i] = err
       } finally {
-        if (++count === promisesArr.length) {
-          resolve(result);
+        if (++count === promiseArr.length) {
+          resolve(values)
         } else {
-          run();
+          run()
         }
       }
     }
-
-    for (let i = 0; i < Math.min(promisesArr.length, limit); i++) {
-      run();
+    for (let i = 0; i < Math.min(promiseArr.length, limit); i++) {
+      run()
     }
-  });
+  })
 }
 
-const promise1 = new Promise((res) => setTimeout(() => res(1), 1000));
-const promise2 = new Promise((res) => setTimeout(() => res(2), 500));
-const promise3 = new Promise((res) => setTimeout(() => res(3), 1500));
+const promise1 = new Promise((res) => setTimeout(() => res(1), 1000))
+const promise2 = new Promise((res) => setTimeout(() => res(2), 500))
+const promise3 = new Promise((res, rej) => setTimeout(() => res(3), 1500))
+const promise4 = new Promise((res) => setTimeout(() => res(4), 700))
+const promise5 = new Promise((res, rej) => setTimeout(() => res(5), 600))
 
-limitQueue([promise1, promise2, promise3], 2).then((resp) => {
-  console.log(resp);
-});
+limitQueue([promise1, promise2, promise3, promise4, promise5], 2).then(res => {
+  console.log(res)
+})
+ 
