@@ -1,22 +1,19 @@
-/*test*/
-function padZero(num) {
-  return (num + "").toString().padStart(2, "0");
+const padZero = (n) => {
+  return (n+"").toString().padStart(2, '0')
 }
 
-function formatData(date, format) {
+const formatData = (time, format) => {
   const map = {
-    YYYY: date.getFullYear(),
-    MM: padZero(date.getMonth() + 1),
-    DD: padZero(date.getDate()),
-    HH: padZero(date.getMinutes()),
-    SS: padZero(date.getSeconds()),
-  };
-
+    YYYY:time.getFullYear(),
+    MM:padZero(time.getMonth() + 1),
+    DD: padZero(time.getDate()),
+    HH: padZero(time.getHours()),
+    MM: padZero(time.getMinutes()),
+    SS:padZero(time.getSeconds())
+  }
   return format.replace(/YYYY|MM|DD|HH|MM|SS/g, (match, expre) => {
-    return map[match];
-  });
+    return map[match]
+  })
 }
-
-const now = new Date();
-
-console.log(formatData(now, "YYYY-MM-DD MM:SS"));
+const now = new Date()
+console.log(formatData(now, "YYYY-MM-DD HH:MM:SS"));

@@ -1,22 +1,18 @@
 function addBigNumbers(a, b) {
-  let i = a.length - 1;
-  let j = b.length - 1;
-  let carry = 0; // 进位
-  let result = "";
+  let i = a.length - 1, j = b.length - 1;
+  let result = '', curry = 0
+  while (i >= 0 || j >= 0 || curry > 0) {
+    const digitA = i >= 0 ? parseInt(a[i]) : 0
+    const digitB = j >= 0 ? parseInt(a[j]) : 0
+    const sum = digitA + digitB + curry
 
-  while (i >= 0 || j >= 0 || carry > 0) {
-    const digitA = i >= 0 ? parseInt(a[i]) : 0;
-    const digitB = j >= 0 ? parseInt(b[j]) : 0;
-    const sum = digitA + digitB + carry;
+    result = (sum % 10 + result)
+    curry = Math.floor(sum / 10)
 
-    result = (sum % 10) + result;
-    carry = Math.floor(sum / 10);
-
-    i--;
-    j--;
+    i--
+    j--
   }
-
-  return result;
+  return result
 }
 
 console.log(addBigNumbers("999", "99")); // 输出: "1098"

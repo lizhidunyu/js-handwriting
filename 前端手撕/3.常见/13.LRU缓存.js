@@ -1,26 +1,24 @@
 class LRUCache {
   constructor(capacity) {
-    this.cache = new Map();
-    this.capacity = capacity;
+    this.cache = new Map()
+    this.capacity = capacity
   }
-
   get(key) {
-    let temp;
+    let temp
     if (this.cache.has(key)) {
-      temp = this.cache.get(key);
-      this.cache.delete(key);
-      this.cache.set(key, temp);
+      temp = this.cache.get(key)
+      this.cache.delete(key)
+      this.cache.set(key, temp)
     }
-    return temp ?? -1;
+    return temp ?? -1
   }
-
   put(key, value) {
     if (this.cache.has(key)) {
-      this.cache.delete(key);
+      this.cache.delete(key)
     }
-    this.cache.set(key, value);
-    if (this.cache.size > this.limit) {
-      this.cache.delete(this.cache.size().next().value);
+    this.cache.set(key, value)
+    if (this.cache.size > this.capacity) {
+      this.cache.delete(this.cache.keys().next().value)
     }
   }
 }

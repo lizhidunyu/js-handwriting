@@ -1,23 +1,23 @@
-(function () {
-  const globalRegistry = {};
+(function() {
+  const globalRegistry = {}
   let id = 0;
   function MySymbol(description) {
     if (this instanceof MySymbol) {
-      throw new Error("Symbol is not a constructor");
+      throw new Error("Symbol is not a constrcutor")
     }
-    return `@@symbol_${description}_${id++}`;
+    return `@@symbol_${description}_${id++}`
   }
-  MySymbol.for = function (key) {
-    if (globalRegistry[key]) {
-      return globalRegistry[key];
+  MySymbol.for = function(key) {
+    if (!globalRegistry[key]) {
+      const symbol = `@@symbol_for_${key}`
+      globalRegistry[key] = symbol
+      return symbol
     } else {
-      const symbol = `@@symbol_for_${key}`;
-      globalRegistry[key] = symbol;
-      return symbol;
+      return globalRegistry[key]
     }
-  };
-  globalThis.MySymbol = MySymbol;
-})();
+  }
+  globalThis.MySymbol = MySymbol
+})()
 
 /*test*/
 const a1 = MySymbol("foo");

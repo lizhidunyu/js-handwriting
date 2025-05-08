@@ -45,9 +45,6 @@ const throttleFn = throttle(fn, 1000, { trailing: true, leading: true });
 throttleFn();
 throttleFn();
 throttleFn();
-throttleFn();
-throttleFn();
-throttleFn();
 setTimeout(() => {
   throttleFn();
 }, 2000);

@@ -1,43 +1,34 @@
-class MyEventBus {
+class Emitter {
     constructor() {
-        this.eventBus = {}
+        this.map = new Map()
     }
-
-    on(eventName, eventCb) {
-        let handlers = this.eventBus[eventName]
-        if (!handlers) {
-            handlers = []
-            this.eventBus[eventName] = handlers
+    on(name, cb) {
+        this.map.get(name) || this.map.set(name, [])
+        this.map.get(name).push(cb)
+    }
+    emit(name, args) {
+        if (!this.map.get(name)) {
+            throw new Error('该函数暂不存在')
+        } else {
+            this.map.get(name).forEach(fn => {
+                fn(...args)
+            });
         }
-        handlers.push(eventCb)
     }
-
-    off(eventName, eventCb) {
-        const handlers = this.eventBus[eventName]
+    off(name, cb) {
+        const handlers = this.map.get(name)
         if (!handlers) return
-        const index = handlers.findIndex((handler) => {
-            handler === eventCb
-        })
-        handlers.splice(index,1)
-    }
-
-    emit(eventName, ...payload) {
-        const handlers = this.eventBus[eventName]
-        if (!handlers) return
-        handlers.forEach(handler => {
-            handler(...payload)
-        });
+        const index = handlers.findIndex(handler => handler === cb )
+        handlers.splice(index, 1)
     }
 }
 
-const $bus = new  MyEventBus()
-$bus.on("cb1",(a,b) => console.log('cb1',a+b))
-$bus.emit("cb1",1,2)
-$bus.on("cb2",() => console.log('cb2'))
-$bus.emit("cb2")
-const fn3 = () => console.log('cb3');
-$bus.on("cb3",fn3)
-$bus.emit("cb3")
-// $bus.off("cb3",fn3)
-$bus.emit("cb3")
-
+const emitter = new Emitter()
+emitter.on('aaa', (a, b) => console.log(a+b))
+const fn1 = (a) => {console.log(a)}
+emitter.on('aaa', fn1)
+emitter.emit('aaa', [123, 456]) 
+emitter.off('aaa', fn1)
+setTimeout(() => {
+    emitter.emit('aaa', [123, 456]) 
+})

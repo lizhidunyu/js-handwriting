@@ -1,43 +1,45 @@
-const debounce = (fn, delay, isImmediate = false, callback) => {
-  let timer = null;
-  let isInvoked = false;
+function debounce(fn, delay, immediate = false, callback) {
+  let timer = null, isInvoked = false
   const _debounce = (...args) => {
     return new Promise((resolve, reject) => {
-      if (!isInvoked && isImmediate) {
-        let res = fn(...args);
-        callback && callback(res);
-        resolve(res);
-        isInvoked = true;
-      }
       if (timer) {
-        clearTimeout(timer);
-        timer = null;
+        clearTimeout(timer)
+      }
+      if (!isInvoked  && immediate) {
+        const res = fn(...args)
+        callback && callback(res)
+        resolve(res)
+        isInvoked = true
       }
       timer = setTimeout(() => {
-        let res = fn(...args);
-        resolve(res);
-        callback && callback(res);
-      }, delay);
-    });
-  };
+        const res = fn(...args)
+        resolve(res)
+        callback && callback(res)
+      }, delay)
+    })
+  }
   _debounce.cancel = () => {
     timer = null;
     isInvoked = false;
-  };
-  return _debounce;
-};
+  }
+  return _debounce
+}
 
 const fn = (a, b) => {
-  console.log("fn---", a, b);
-  return a + b;
-};
-const debounceFn = debounce(fn, 500, true, (res) => {
-  console.log("res:", res);
-});
-debounceFn(1, 2).then((res) => {
-  console.log("promise res:", res);
-});
-debounceFn();
-debounceFn();
-debounceFn();
-debounceFn();
+  console.log(a, b)
+}
+const debounceFn = debounce(fn, 1000, true)
+debounceFn(1,2)
+debounceFn(1,2)
+debounceFn(1,2)
+debounceFn(1,2)
+debounceFn(1,2)
+setTimeout(() => {
+  debounceFn(1,2)
+}, 1500)
+setTimeout(() => {
+  debounceFn(1,2)
+}, 2500)
+
+
+ 
